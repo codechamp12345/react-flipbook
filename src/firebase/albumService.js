@@ -56,17 +56,7 @@ export const fetchAlbumImages = async (qrCode) => {
       throw new Error('No valid images found in album')
     }
     
-    // Handle odd count: duplicate second-to-last so last page has a pair
-    if (imageUrls.length % 2 !== 0 && imageUrls.length > 1) {
-      const secondToLastImg = imageUrls[imageUrls.length - 2]
-      const lastImg = imageUrls.pop()
-      imageUrls.push(secondToLastImg)
-      imageUrls.push(lastImg)
-    } else if (imageUrls.length === 1) {
-      imageUrls.push(imageUrls[0])
-    }
-    
-    // Convert to image objects for React components
+    // Convert to image objects for React components - no duplication
     return imageUrls.map((url, index) => ({
       id: `img-${index}`,
       url: url,

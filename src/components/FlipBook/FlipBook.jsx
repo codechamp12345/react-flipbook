@@ -170,13 +170,13 @@ function FlipBook({ images = [] }) {
           className="flex justify-center items-center overflow-visible"
           style={{ perspective: '2000px' }}
         >
-          <div className="relative w-[36rem] h-[24rem] sm:w-[42rem] sm:h-[28rem] md:w-[48rem] md:h-[32rem] lg:w-[56rem] lg:h-[36rem] xl:w-[64rem] xl:h-[40rem] max-w-[95vw] max-h-[70vh] bg-neutral-100 rounded-lg shadow-2xl">
+          <div className="relative w-[40rem] h-[28rem] sm:w-[48rem] sm:h-[32rem] md:w-[56rem] md:h-[36rem] lg:w-[64rem] lg:h-[42rem] xl:w-[72rem] xl:h-[48rem] max-w-[95vw] max-h-[75vh] bg-neutral-100 rounded-lg shadow-2xl">
 
             <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-neutral-300 transform -translate-x-0.5 z-30 shadow-sm"></div>
 
             <div className="absolute inset-2 bg-white rounded-lg shadow-lg">
               <div className="flex h-full">
-                <div className="w-1/2 p-2.5 flex flex-col border-r border-gray-200">
+                <div className="w-1/2 p-1.5 flex flex-col border-r border-gray-200">
                   <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                     {currentSheet.left ? (
                       <AlbumImage
@@ -190,12 +190,12 @@ function FlipBook({ images = [] }) {
                       </div>
                     )}
                   </div>
-                  <div className="text-center mt-2">
+                  <div className="text-center mt-1">
                     <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 1}</span>
                   </div>
                 </div>
 
-                <div className="w-1/2 p-2.5 flex flex-col">
+                <div className="w-1/2 p-1.5 flex flex-col">
                   <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                     {currentSheet.right ? (
                       <AlbumImage
@@ -209,7 +209,7 @@ function FlipBook({ images = [] }) {
                       </div>
                     )}
                   </div>
-                  <div className="text-center mt-2">
+                  <div className="text-center mt-1">
                     <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ function FlipBook({ images = [] }) {
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
-                      <div className="w-full h-full p-2.5 flex flex-col">
+                      <div className="w-full h-full p-1.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {currentSheet.right ? (
                             <AlbumImage
@@ -246,7 +246,7 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-2">
+                        <div className="text-center mt-1">
                           <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
                         </div>
                       </div>
@@ -256,7 +256,7 @@ function FlipBook({ images = [] }) {
                       className="absolute inset-0 backface-hidden"
                       style={{ transform: 'rotateY(180deg)' }}
                     >
-                      <div className="w-full h-full p-2.5 flex flex-col">
+                      <div className="w-full h-full p-1.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {targetSheet.left ? (
                             <AlbumImage
@@ -268,7 +268,7 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-2">
+                        <div className="text-center mt-1">
                           <span className="text-xs text-gray-500 font-mono">{(currentIndex + 1) * 2 + 1}</span>
                         </div>
                       </div>
@@ -298,7 +298,7 @@ function FlipBook({ images = [] }) {
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
-                      <div className="w-full h-full p-2.5 flex flex-col">
+                      <div className="w-full h-full p-1.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {currentSheet.right ? (
                             <AlbumImage
@@ -310,7 +310,7 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-2">
+                        <div className="text-center mt-1">
                           <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
                         </div>
                       </div>
@@ -320,7 +320,7 @@ function FlipBook({ images = [] }) {
                       className="absolute inset-0 backface-hidden"
                       style={{ transform: 'rotateY(180deg)' }}
                     >
-                      <div className="w-full h-full p-2.5 flex flex-col">
+                      <div className="w-full h-full p-1.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {targetSheet.right ? (
                             <AlbumImage
@@ -332,7 +332,7 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-2">
+                        <div className="text-center mt-1">
                           <span className="text-xs text-gray-500 font-mono">{(currentIndex - 1) * 2 + 2}</span>
                         </div>
                       </div>

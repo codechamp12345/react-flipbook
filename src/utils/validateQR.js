@@ -14,20 +14,19 @@ export const formatQRInput = (input) => {
 export const processImagesForFlipbook = (images) => {
   if (!images || images.length === 0) return []
   
-  // If single image, duplicate it
-  if (images.length === 1) {
-    return [images[0], { ...images[0], id: `${images[0].id}-duplicate` }]
+  // Remove any duplicate images based on URL
+  const uniqueImages = images.filter((image, index, self) => 
+    index === self.findIndex(img => img.url === image.url)
+  )
+  
+  // If we have an odd number of unique images, add a placeholder instead of duplicating
+  if (uniqueImages.length % 2 !== 0) {
+    uniqueImages.push({
+      id: `placeholder-${uniqueImages.length}`,
+      url: null,
+      alt: 'Empty page'
+    })
   }
   
-  // If odd number of images, duplicate second-last image
-  if (images.length % 2 !== 0) {
-    const secondLastIndex = images.length - 2
-    const duplicateImage = { 
-      ...images[secondLastIndex], 
-      id: `${images[secondLastIndex].id}-duplicate` 
-    }
-    return [...images, duplicateImage]
-  }
-  
-  return images
+  return uniqueImages
 }
