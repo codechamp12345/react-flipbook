@@ -221,11 +221,11 @@ function FlipBook({ images = [] }) {
 
                 {flipDirection === 'prev' && (
                   <motion.div
-                    className="absolute top-2 bottom-2 left-2 w-1/2 bg-white rounded-l-lg shadow-xl z-20"
+                    className="absolute top-2 bottom-2 right-2 w-1/2 bg-white rounded-r-lg shadow-xl z-20"
                     style={{
                       transformStyle: 'preserve-3d',
                       backfaceVisibility: 'hidden',
-                      transformOrigin: 'right center'
+                      transformOrigin: 'left center'
                     }}
                     initial={{ rotateY: 180 }}
                     animate={{ rotateY: 0 }}
@@ -235,6 +235,28 @@ function FlipBook({ images = [] }) {
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
+                      <div className="w-full h-full p-2.5 flex flex-col">
+                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
+                          {currentSheet.right ? (
+                            <img
+                              src={currentSheet.right.url}
+                              alt={currentSheet.right.alt}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-50"></div>
+                          )}
+                        </div>
+                        <div className="text-center mt-2">
+                          <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="absolute inset-0 backface-hidden"
+                      style={{ transform: 'rotateY(180deg)' }}
+                    >
                       <div className="w-full h-full p-2.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {targetSheet.right ? (
@@ -253,30 +275,8 @@ function FlipBook({ images = [] }) {
                       </div>
                     </div>
 
-                    <div
-                      className="absolute inset-0 backface-hidden"
-                      style={{ transform: 'rotateY(180deg)' }}
-                    >
-                      <div className="w-full h-full p-2.5 flex flex-col">
-                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
-                          {currentSheet.left ? (
-                            <img
-                              src={currentSheet.left.url}
-                              alt={currentSheet.left.alt}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gray-50"></div>
-                          )}
-                        </div>
-                        <div className="text-center mt-2">
-                          <span className="text-xs text-gray-500 font-mono">{currentIndex * 2 + 1}</span>
-                        </div>
-                      </div>
-                    </div>
-
                     <motion.div
-                      className="absolute inset-0 bg-black/20 rounded-l-lg pointer-events-none"
+                      className="absolute inset-0 bg-black/20 rounded-r-lg pointer-events-none"
                       animate={{ opacity: [0, 0.3, 0] }}
                       transition={{ duration: 0.8, times: [0, 0.5, 1] }}
                     />
@@ -341,7 +341,7 @@ function FlipBook({ images = [] }) {
           </svg>
         </motion.button>
       </div>
-    </div>
+    </div >
   )
 }
 
