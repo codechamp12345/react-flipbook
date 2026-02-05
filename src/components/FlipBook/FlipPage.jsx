@@ -1,13 +1,9 @@
-import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 function FlipPage({
     frontImage,
     backImage,
-    isFlipping,
     zIndex,
-    isActive,
-    onImageLoad,
     pageNumber,
     isFlipped
 }) {
@@ -16,12 +12,10 @@ function FlipPage({
 
     const handleFrontLoad = () => {
         setFrontLoaded(true)
-        onImageLoad?.()
     }
 
     const handleBackLoad = () => {
         setBackLoaded(true)
-        onImageLoad?.()
     }
 
     return (
@@ -82,7 +76,7 @@ function FlipPage({
 
                 {/* Content area */}
                 <div className="h-full pl-4 pr-3 py-4 flex flex-col">
-                    {/* Image containr */}
+                    {/* Image container */}
                     <div className="flex-1 relative bg-gray-50 rounded-md overflow-hidden">
                         {backImage ? (
                             <div className="relative w-full h-full">
@@ -106,7 +100,7 @@ function FlipPage({
                         )}
                     </div>
 
-                    {/* Page numbe */}
+                    {/* Page number */}
                     <div className="text-center mt-2">
                         <span className="text-xs text-gray-500 font-mono">{pageNumber * 2 - 1}</span>
                     </div>
