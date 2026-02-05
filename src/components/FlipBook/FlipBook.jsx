@@ -57,7 +57,7 @@ function AlbumImage({ src, alt, className }) {
         alt={alt}
         onLoad={handleLoad}
         onError={handleError}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'
+        className={`w-full h-full object-contain transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'
           }`}
         loading="lazy"
       />
@@ -170,7 +170,7 @@ function FlipBook({ images = [] }) {
           className="flex justify-center items-center overflow-visible"
           style={{ perspective: '2000px' }}
         >
-          <div className="relative w-[32rem] h-[20rem] sm:w-[40rem] sm:h-[24rem] md:w-[52rem] md:h-[32rem] lg:w-[60rem] lg:h-[36rem] max-w-[95vw] max-h-[65vh] bg-neutral-100 rounded-lg shadow-2xl">
+          <div className="relative w-[36rem] h-[24rem] sm:w-[42rem] sm:h-[28rem] md:w-[48rem] md:h-[32rem] lg:w-[56rem] lg:h-[36rem] xl:w-[64rem] xl:h-[40rem] max-w-[95vw] max-h-[70vh] bg-neutral-100 rounded-lg shadow-2xl">
 
             <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-neutral-300 transform -translate-x-0.5 z-30 shadow-sm"></div>
 
