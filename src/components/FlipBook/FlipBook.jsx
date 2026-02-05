@@ -2,6 +2,69 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { processImagesForFlipbook } from '../../utils/validateQR'
 
+// Image component with loading and error handling
+function AlbumImage({ src, alt, className }) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [imgSrc, setImgSrc] = useState(src)
+
+  useEffect(() => {
+    setImgSrc(src)
+    setIsLoading(true)
+    setHasError(false)
+  }, [src])
+
+  const handleLoad = () => {
+    setIsLoading(false)
+    setHasError(false)
+  }
+
+  const handleError = () => {
+    setIsLoading(false)
+    setHasError(true)
+
+    // Try alternative URL formats if the original fails
+    if (src && !src.startsWith('http') && !imgSrc.includes('proxyImage')) {
+      const proxyUrl = `https://us-central1-instant-photos-9a258.cloudfunctions.net/proxyImage?path=${encodeURIComponent(src)}`
+      setImgSrc(proxyUrl)
+      setIsLoading(true)
+      setHasError(false)
+    }
+  }
+
+  if (hasError) {
+    return (
+      <div className={`${className} bg-gray-100 flex items-center justify-center`}>
+        <div className="text-center text-gray-400">
+          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <p className="text-xs">Failed to load</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={`${className} relative`}>
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      )}
+      <img
+        src={imgSrc}
+        alt={alt}
+        onLoad={handleLoad}
+        onError={handleError}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+        loading="lazy"
+      />
+    </div>
+  )
+}
+
 function FlipBook({ images = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFlipping, setIsFlipping] = useState(false)
@@ -116,10 +179,10 @@ function FlipBook({ images = [] }) {
                 <div className="w-1/2 p-2.5 flex flex-col border-r border-gray-200">
                   <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                     {currentSheet.left ? (
-                      <img
+                      <AlbumImage
                         src={currentSheet.left.url}
                         alt={currentSheet.left.alt}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full rounded-sm"
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-50 flex items-center justify-center">
@@ -135,10 +198,10 @@ function FlipBook({ images = [] }) {
                 <div className="w-1/2 p-2.5 flex flex-col">
                   <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                     {currentSheet.right ? (
-                      <img
+                      <AlbumImage
                         src={currentSheet.right.url}
                         alt={currentSheet.right.alt}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full rounded-sm"
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-50 flex items-center justify-center">
@@ -174,10 +237,10 @@ function FlipBook({ images = [] }) {
                       <div className="w-full h-full p-2.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {currentSheet.right ? (
-                            <img
+                            <AlbumImage
                               src={currentSheet.right.url}
                               alt={currentSheet.right.alt}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full rounded-sm"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
@@ -196,10 +259,10 @@ function FlipBook({ images = [] }) {
                       <div className="w-full h-full p-2.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {targetSheet.left ? (
-                            <img
+                            <AlbumImage
                               src={targetSheet.left.url}
                               alt={targetSheet.left.alt}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full rounded-sm"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
@@ -238,10 +301,10 @@ function FlipBook({ images = [] }) {
                       <div className="w-full h-full p-2.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {currentSheet.right ? (
-                            <img
+                            <AlbumImage
                               src={currentSheet.right.url}
                               alt={currentSheet.right.alt}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full rounded-sm"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
@@ -260,10 +323,10 @@ function FlipBook({ images = [] }) {
                       <div className="w-full h-full p-2.5 flex flex-col">
                         <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
                           {targetSheet.right ? (
-                            <img
+                            <AlbumImage
                               src={targetSheet.right.url}
                               alt={targetSheet.right.alt}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full rounded-sm"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
