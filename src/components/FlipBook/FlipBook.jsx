@@ -152,15 +152,15 @@ function FlipBook({ images = [] }) {
         </div>
       </div>
 
-      {/* Album Container - Auto-rotate on mobile */}
-      <div className="relative mb-4 sm:mb-8 transform-gpu rotate-90 sm:rotate-0 scale-75 sm:scale-100 origin-center">
+      {/* Album Container - Auto-rotate on mobile with better scaling */}
+      <div className="relative mb-4 sm:mb-8 transform-gpu rotate-90 sm:rotate-0 scale-90 sm:scale-100 origin-center">
         <div
           className="flex justify-center items-center overflow-visible"
           style={{ perspective: '2000px' }}
         >
-          {/* Responsive Album Dimensions - Mobile rotated, larger for landscape view */}
+          {/* Responsive Album Dimensions - Larger mobile album */}
           <div className="relative 
-            w-[75vh] h-[50vh] max-w-[480px] max-h-[320px]
+            w-[85vh] h-[60vh] max-w-[600px] max-h-[400px]
             sm:w-[40rem] sm:h-[28rem] 
             md:w-[56rem] md:h-[36rem] 
             lg:w-[64rem] lg:h-[42rem] 
@@ -189,9 +189,6 @@ function FlipBook({ images = [] }) {
                       </div>
                     )}
                   </div>
-                  <div className="text-center mt-0.5 sm:mt-1">
-                    <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{currentIndex * 2 + 1}</span>
-                  </div>
                 </div>
 
                 {/* Right Page */}
@@ -208,9 +205,6 @@ function FlipBook({ images = [] }) {
                         <p className="text-gray-400 text-xs sm:text-sm">Empty page</p>
                       </div>
                     )}
-                  </div>
-                  <div className="text-center mt-0.5 sm:mt-1">
-                    <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
                   </div>
                 </div>
               </div>
@@ -235,8 +229,8 @@ function FlipBook({ images = [] }) {
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
-                      <div className="w-full h-full p-1 sm:p-1.5 flex flex-col">
-                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
+                      <div className="w-full h-full p-1 sm:p-1.5">
+                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden h-full">
                           {currentSheet.right ? (
                             <AlbumImage
                               src={currentSheet.right.url}
@@ -247,9 +241,6 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-0.5 sm:mt-1">
-                          <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
-                        </div>
                       </div>
                     </div>
 
@@ -257,8 +248,8 @@ function FlipBook({ images = [] }) {
                       className="absolute inset-0 backface-hidden"
                       style={{ transform: 'rotateY(180deg)' }}
                     >
-                      <div className="w-full h-full p-1 sm:p-1.5 flex flex-col">
-                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
+                      <div className="w-full h-full p-1 sm:p-1.5">
+                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden h-full">
                           {targetSheet.left ? (
                             <AlbumImage
                               src={targetSheet.left.url}
@@ -268,9 +259,6 @@ function FlipBook({ images = [] }) {
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
-                        </div>
-                        <div className="text-center mt-0.5 sm:mt-1">
-                          <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{(currentIndex + 1) * 2 + 1}</span>
                         </div>
                       </div>
                     </div>
@@ -300,8 +288,8 @@ function FlipBook({ images = [] }) {
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
-                      <div className="w-full h-full p-1 sm:p-1.5 flex flex-col">
-                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
+                      <div className="w-full h-full p-1 sm:p-1.5">
+                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden h-full">
                           {currentSheet.right ? (
                             <AlbumImage
                               src={currentSheet.right.url}
@@ -312,9 +300,6 @@ function FlipBook({ images = [] }) {
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
                         </div>
-                        <div className="text-center mt-0.5 sm:mt-1">
-                          <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{currentIndex * 2 + 2}</span>
-                        </div>
                       </div>
                     </div>
 
@@ -322,8 +307,8 @@ function FlipBook({ images = [] }) {
                       className="absolute inset-0 backface-hidden"
                       style={{ transform: 'rotateY(180deg)' }}
                     >
-                      <div className="w-full h-full p-1 sm:p-1.5 flex flex-col">
-                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden">
+                      <div className="w-full h-full p-1 sm:p-1.5">
+                        <div className="flex-1 relative bg-white rounded-sm overflow-hidden h-full">
                           {targetSheet.right ? (
                             <AlbumImage
                               src={targetSheet.right.url}
@@ -333,9 +318,6 @@ function FlipBook({ images = [] }) {
                           ) : (
                             <div className="w-full h-full bg-gray-50"></div>
                           )}
-                        </div>
-                        <div className="text-center mt-0.5 sm:mt-1">
-                          <span className="text-[10px] sm:text-xs text-gray-500 font-mono">{(currentIndex - 1) * 2 + 2}</span>
                         </div>
                       </div>
                     </div>
@@ -356,29 +338,82 @@ function FlipBook({ images = [] }) {
         </div>
       </div>
 
-      {/* Navigation Controls - Auto-rotate on mobile to match album */}
-      <div className="flex items-center justify-between w-full max-w-sm sm:max-w-lg px-4 mb-4 rotate-90 sm:rotate-0 transform origin-center">
+      {/* Mobile Navigation - Side positioned buttons */}
+      <div className="block sm:hidden">
+        {/* Previous Button - Left Side */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handlePrevious}
           disabled={currentIndex === 0 || isFlipping}
-          className="flex items-center space-x-1.5 sm:space-x-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-3 py-2 sm:px-5 sm:py-3 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-all duration-200 shadow-lg"
+          className="fixed left-4 top-1/2 transform -translate-y-1/2 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md border border-white/40 rounded-full w-14 h-14 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/40 transition-all duration-200 shadow-lg"
         >
-          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          <span className="text-sm sm:text-base sm:inline">Prev</span>
-          <span className="hidden sm:inline">ious</span>
         </motion.button>
 
-        <div className="flex flex-col items-center space-y-2 sm:space-y-3">
-          <div className="text-white/90 text-sm sm:text-lg font-semibold">
-            <span className="sm:hidden">{currentIndex + 1}/{totalSheets}</span>
-            <span className="hidden sm:inline">Page {currentIndex + 1} of {totalSheets}</span>
+        {/* Next Button - Right Side */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleNext}
+          disabled={currentIndex === totalSheets - 1 || isFlipping}
+          className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md border border-white/40 rounded-full w-14 h-14 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/40 transition-all duration-200 shadow-lg"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </motion.button>
+
+        {/* Page Indicator - Bottom Center */}
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="text-white/90 text-sm font-semibold bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2">
+              {currentIndex + 1}/{totalSheets}
+            </div>
+            <div className="flex space-x-2">
+              {Array.from({ length: Math.min(totalSheets, 6) }, (_, index) => {
+                const pageIndex = totalSheets <= 6 ? index :
+                  currentIndex < 3 ? index :
+                    currentIndex > totalSheets - 4 ? totalSheets - 6 + index :
+                      currentIndex - 2 + index
+
+                return (
+                  <motion.div
+                    key={pageIndex}
+                    className={`w-2 h-2 rounded-full transition-all duration-200 ${pageIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/40'
+                      }`}
+                    whileHover={{ scale: 1.3 }}
+                  />
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Navigation - Bottom positioned */}
+      <div className="hidden sm:flex items-center justify-between w-full max-w-lg px-4 mb-4">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handlePrevious}
+          disabled={currentIndex === 0 || isFlipping}
+          className="flex items-center space-x-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-5 py-3 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-all duration-200 shadow-lg"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Previous</span>
+        </motion.button>
+
+        <div className="flex flex-col items-center space-y-3">
+          <div className="text-white/90 text-lg font-semibold">
+            Page {currentIndex + 1} of {totalSheets}
           </div>
 
-          <div className="flex space-x-1.5 sm:space-x-2">
+          <div className="flex space-x-2">
             {Array.from({ length: Math.min(totalSheets, 6) }, (_, index) => {
               const pageIndex = totalSheets <= 6 ? index :
                 currentIndex < 3 ? index :
@@ -388,7 +423,7 @@ function FlipBook({ images = [] }) {
               return (
                 <motion.div
                   key={pageIndex}
-                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-200 ${pageIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/40'
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${pageIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/40'
                     }`}
                   whileHover={{ scale: 1.3 }}
                 />
@@ -402,10 +437,10 @@ function FlipBook({ images = [] }) {
           whileTap={{ scale: 0.95 }}
           onClick={handleNext}
           disabled={currentIndex === totalSheets - 1 || isFlipping}
-          className="flex items-center space-x-1.5 sm:space-x-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-3 py-2 sm:px-5 sm:py-3 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-all duration-200 shadow-lg"
+          className="flex items-center space-x-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-5 py-3 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/30 transition-all duration-200 shadow-lg"
         >
-          <span className="text-sm sm:text-base">Next</span>
-          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span>Next</span>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </motion.button>
