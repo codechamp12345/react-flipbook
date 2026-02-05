@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+        @apply bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 min-h-screen;
+    }
+}
+
+@layer utilities {
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .perspective-1500 {
+        perspective: 1500px;
+    }
+
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+        backface-visibility: hidden;
+    }
+
+    .rotate-y-180 {
+        transform: rotateY(180deg);
+    }
+
+    /* Book-like styling */
+    .book-shadow {
+        box-shadow:
+            0 0 20px rgba(0, 0, 0, 0.3),
+            0 0 40px rgba(0, 0, 0, 0.2),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .page-shadow {
+        box-shadow:
+            2px 0 10px rgba(0, 0, 0, 0.2),
+            -2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-spine {
+        background: linear-gradient(90deg,
+                rgba(0, 0, 0, 0.1) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(0, 0, 0, 0.1) 100%);
+    }
+}
+
+/* Fix for 3D transforms */
+.flip-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.flip-page {
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease-in-out;
+    transform-origin: left center;
+}
+
+.flip-page.flipped {
+    transform: rotateY(-180deg);
+}
