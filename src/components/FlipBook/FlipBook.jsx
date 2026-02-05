@@ -2,32 +2,23 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { processImagesForFlipbook } from '../../utils/validateQR'
 
-// Image component with loading and error handling
+// Image component with error handling (no loading spinner)
 function AlbumImage({ src, alt, className }) {
-  const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [imgSrc, setImgSrc] = useState(src)
 
   useEffect(() => {
     setImgSrc(src)
-    setIsLoading(true)
     setHasError(false)
   }, [src])
 
-  const handleLoad = () => {
-    setIsLoading(false)
-    setHasError(false)
-  }
-
   const handleError = () => {
-    setIsLoading(false)
     setHasError(true)
 
     // Try alternative URL formats if the original fails
     if (src && !src.startsWith('http') && !imgSrc.includes('proxyImage')) {
       const proxyUrl = `https://us-central1-instant-photos-9a258.cloudfunctions.net/proxyImage?path=${encodeURIComponent(src)}`
       setImgSrc(proxyUrl)
-      setIsLoading(true)
       setHasError(false)
     }
   }
@@ -46,22 +37,13 @@ function AlbumImage({ src, alt, className }) {
   }
 
   return (
-    <div className={`${className} relative`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-          <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-        </div>
-      )}
-      <img
-        src={imgSrc}
-        alt={alt}
-        onLoad={handleLoad}
-        onError={handleError}
-        className={`w-full h-full object-contain transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'
-          }`}
-        loading="lazy"
-      />
-    </div>
+    <img
+      src={imgSrc}
+      alt={alt}
+      onError={handleError}
+      className={`${className} w-full h-full object-contain`}
+      loading="eager"
+    />
   )
 }
 
@@ -85,8 +67,10 @@ function FlipBook({ images = [] }) {
       setFlipDirection('next')
       setTimeout(() => {
         setCurrentIndex(prev => prev + 1)
+      }, 400)
+      setTimeout(() => {
         setIsFlipping(false)
-      }, 800)
+      }, 700)
     }
   }
 
@@ -96,8 +80,10 @@ function FlipBook({ images = [] }) {
       setFlipDirection('prev')
       setTimeout(() => {
         setCurrentIndex(prev => prev - 1)
+      }, 400)
+      setTimeout(() => {
         setIsFlipping(false)
-      }, 800)
+      }, 700)
     }
   }
 
@@ -229,8 +215,9 @@ function FlipBook({ images = [] }) {
                     initial={{ rotateY: 0 }}
                     animate={{ rotateY: -180 }}
                     transition={{
-                      duration: 0.8,
-                      ease: [0.25, 0.46, 0.45, 0.94]
+                      duration: 0.7,
+                      ease: [0.25, 0.1, 0.25, 1],
+                      delay: 0.1
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
@@ -277,7 +264,7 @@ function FlipBook({ images = [] }) {
                     <motion.div
                       className="absolute inset-0 bg-black/20 rounded-r-lg pointer-events-none"
                       animate={{ opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 0.8, times: [0, 0.5, 1] }}
+                      transition={{ duration: 0.7, times: [0, 0.3, 0.7, 1] }}
                     />
                   </motion.div>
                 )}
@@ -293,8 +280,9 @@ function FlipBook({ images = [] }) {
                     initial={{ rotateY: 180 }}
                     animate={{ rotateY: 0 }}
                     transition={{
-                      duration: 0.8,
-                      ease: [0.25, 0.46, 0.45, 0.94]
+                      duration: 0.7,
+                      ease: [0.25, 0.1, 0.25, 1],
+                      delay: 0.1
                     }}
                   >
                     <div className="absolute inset-0 backface-hidden">
@@ -341,7 +329,7 @@ function FlipBook({ images = [] }) {
                     <motion.div
                       className="absolute inset-0 bg-black/20 rounded-r-lg pointer-events-none"
                       animate={{ opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 0.8, times: [0, 0.5, 1] }}
+                      transition={{ duration: 0.7, times: [0, 0.3, 0.7, 1] }}
                     />
                   </motion.div>
                 )}
