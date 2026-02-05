@@ -140,27 +140,27 @@ function FlipBook({ images = [] }) {
 
   return (
     <div className="flex flex-col items-center justify-center h-full max-w-full">
-      {/* Mobile rotation hint - only show on very small screens */}
+      {/* Mobile rotation hint - updated message */}
       <div className="block sm:hidden mb-2 text-center">
         <div className="bg-white/10 backdrop-blur-md rounded-lg px-3 py-1.5 border border-white/20">
           <p className="text-white/80 text-xs flex items-center justify-center space-x-1.5">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <span>Rotate for better view</span>
+            <span>Album optimized for landscape</span>
           </p>
         </div>
       </div>
 
-      {/* Album Container */}
-      <div className="relative mb-4 sm:mb-8 transform-gpu">
+      {/* Album Container - Auto-rotate on mobile */}
+      <div className="relative mb-4 sm:mb-8 transform-gpu rotate-90 sm:rotate-0 scale-75 sm:scale-100 origin-center">
         <div
           className="flex justify-center items-center overflow-visible"
           style={{ perspective: '2000px' }}
         >
-          {/* Responsive Album Dimensions - Mobile optimized for small screens only */}
+          {/* Responsive Album Dimensions - Mobile rotated, larger for landscape view */}
           <div className="relative 
-            w-[85vw] h-[60vw] max-w-[320px] max-h-[240px]
+            w-[75vh] h-[50vh] max-w-[480px] max-h-[320px]
             sm:w-[40rem] sm:h-[28rem] 
             md:w-[56rem] md:h-[36rem] 
             lg:w-[64rem] lg:h-[42rem] 
@@ -356,8 +356,8 @@ function FlipBook({ images = [] }) {
         </div>
       </div>
 
-      {/* Navigation Controls - Mobile compact, Desktop full */}
-      <div className="flex items-center justify-between w-full max-w-sm sm:max-w-lg px-4 mb-4">
+      {/* Navigation Controls - Auto-rotate on mobile to match album */}
+      <div className="flex items-center justify-between w-full max-w-sm sm:max-w-lg px-4 mb-4 rotate-90 sm:rotate-0 transform origin-center">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
