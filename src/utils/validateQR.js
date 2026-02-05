@@ -19,12 +19,13 @@ export const processImagesForFlipbook = (images) => {
     index === self.findIndex(img => img.url === image.url)
   )
   
-  // If we have an odd number of unique images, add a placeholder instead of duplicating
+  // If we have an odd number of unique images, duplicate the last image to fill the pair
   if (uniqueImages.length % 2 !== 0) {
+    const lastImage = uniqueImages[uniqueImages.length - 1]
     uniqueImages.push({
-      id: `placeholder-${uniqueImages.length}`,
-      url: null,
-      alt: 'Empty page'
+      ...lastImage,
+      id: `${lastImage.id}-duplicate`,
+      alt: `${lastImage.alt} (duplicate)`
     })
   }
   
