@@ -154,6 +154,35 @@ function FlipBook({ images = [] }) {
 
       {/* Album Container - Auto-rotate on mobile with better scaling */}
       <div className="relative mb-4 sm:mb-8 transform-gpu rotate-90 sm:rotate-0 scale-90 sm:scale-100 origin-center">
+        {/* Mobile Navigation Arrows - Positioned at album edges */}
+        <div className="block sm:hidden">
+          {/* Previous Button - Left edge of album (but functions as Previous due to rotation) */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleNext}
+            disabled={currentIndex === totalSheets - 1 || isFlipping}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-50 flex items-center justify-center bg-white/80 backdrop-blur-md border-2 border-white rounded-full w-16 h-16 text-gray-800 font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 transition-all duration-300 shadow-2xl"
+          >
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+            </svg>
+          </motion.button>
+
+          {/* Next Button - Right edge of album (but functions as Next due to rotation) */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handlePrevious}
+            disabled={currentIndex === 0 || isFlipping}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 z-50 flex items-center justify-center bg-white/80 backdrop-blur-md border-2 border-white rounded-full w-16 h-16 text-gray-800 font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 transition-all duration-300 shadow-2xl"
+          >
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.button>
+        </div>
+
         <div
           className="flex justify-center items-center overflow-visible"
           style={{ perspective: '2000px' }}
@@ -338,57 +367,28 @@ function FlipBook({ images = [] }) {
         </div>
       </div>
 
-      {/* Mobile Navigation - Side positioned buttons for rotated album */}
-      <div className="block sm:hidden">
-        {/* Previous Button - Top of screen (left side of rotated album) */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handlePrevious}
-          disabled={currentIndex === 0 || isFlipping}
-          className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md border border-white/40 rounded-full w-14 h-14 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/40 transition-all duration-200 shadow-lg"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </motion.button>
+      {/* Mobile Page Indicator - Bottom center */}
+      <div className="block sm:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="text-white/90 text-sm font-semibold bg-black/50 backdrop-blur-md rounded-lg px-4 py-2 border border-white/30">
+            {currentIndex + 1}/{totalSheets}
+          </div>
+          <div className="flex space-x-2">
+            {Array.from({ length: Math.min(totalSheets, 6) }, (_, index) => {
+              const pageIndex = totalSheets <= 6 ? index :
+                currentIndex < 3 ? index :
+                  currentIndex > totalSheets - 4 ? totalSheets - 6 + index :
+                    currentIndex - 2 + index
 
-        {/* Next Button - Bottom of screen (right side of rotated album) */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleNext}
-          disabled={currentIndex === totalSheets - 1 || isFlipping}
-          className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center bg-white/30 backdrop-blur-md border border-white/40 rounded-full w-14 h-14 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/40 transition-all duration-200 shadow-lg"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
-
-        {/* Page Indicator - Right side of screen (bottom of rotated album) */}
-        <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
-          <div className="flex flex-col items-center space-y-2">
-            <div className="text-white/90 text-sm font-semibold bg-black/30 backdrop-blur-sm rounded-lg px-3 py-2 rotate-90">
-              {currentIndex + 1}/{totalSheets}
-            </div>
-            <div className="flex flex-col space-y-2">
-              {Array.from({ length: Math.min(totalSheets, 6) }, (_, index) => {
-                const pageIndex = totalSheets <= 6 ? index :
-                  currentIndex < 3 ? index :
-                    currentIndex > totalSheets - 4 ? totalSheets - 6 + index :
-                      currentIndex - 2 + index
-
-                return (
-                  <motion.div
-                    key={pageIndex}
-                    className={`w-2 h-2 rounded-full transition-all duration-200 ${pageIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/40'
-                      }`}
-                    whileHover={{ scale: 1.3 }}
-                  />
-                )
-              })}
-            </div>
+              return (
+                <motion.div
+                  key={pageIndex}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${pageIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/60'
+                    }`}
+                  whileHover={{ scale: 1.3 }}
+                />
+              )
+            })}
           </div>
         </div>
       </div>
